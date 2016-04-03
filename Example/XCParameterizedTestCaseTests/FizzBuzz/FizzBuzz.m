@@ -27,13 +27,15 @@
 @implementation FizzBuzz
 
 + (NSString *)outputForInteger:(NSInteger)integer {
-    
+
     NSMutableString *result = [NSMutableString string];
-    
+
     if ([self isNumberMultipleOf_03:integer]) [result appendString:@"Fizz"];
     if ([self isNumberMultipleOf_05:integer]) [result appendString:@"Buzz"];
-    if ([result length] == 0) [result appendString:[@(integer) description]];
-    
+    if ([result length] == 0){
+       [result appendString:[@(integer) description]];
+    }
+
     return result;
 }
 

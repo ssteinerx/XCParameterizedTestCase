@@ -30,7 +30,8 @@
 @interface XCParameterizedTestCase : XCTestCase
 
 + (void)addTestCaseWithInput:(id)input
-               expectedValue:(id)expected toTestSuite:(XCTestSuite *)testSuite;
+               expectedValue:(id)expected
+                 toTestSuite:(XCTestSuite *)testSuite;
 
 + (NSArray *)testCaseData;
 

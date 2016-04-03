@@ -37,7 +37,6 @@
         _input = input;
         _expected = expected;
     }
-    
     return self;
 }
 

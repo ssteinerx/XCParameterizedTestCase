@@ -31,13 +31,16 @@
 
 + (id)defaultTestSuite {
     XCTestSuite *suite = [[XCTestSuite alloc] initWithName:NSStringFromClass(self)];
-    
+
+    // For each one of the TestCaseData
     for (id<TestCaseData> item in [self testCaseData]) {
+        // Add a parameterized version to `suite` for each available
+        // implemented test case
         [self addTestCaseWithInput:item.input
                      expectedValue:item.expected
                        toTestSuite:suite];
     }
-    
+
     return suite;
 }
 
@@ -46,11 +49,15 @@
 }
 
 + (void)addTestCaseWithInput:(id)input
-               expectedValue:(id)expected toTestSuite:(XCTestSuite *)testSuite {
-    
+               expectedValue:(id)expected
+                 toTestSuite:(XCTestSuite *)testSuite
+{
+
     for (id invocation in [self testInvocations]) {
+        // for each test coded within this XCTestSuite
         XCTestCase *test = [[self alloc] initWithInvocation:invocation
-                                                  withInput:input withExpected:expected];
+                                                  withInput:input
+                                               withExpected:expected];
         [testSuite addTest:test];
     }
 }
@@ -58,19 +65,19 @@
 - (instancetype)initWithInvocation:(NSInvocation *)invocation
                          withInput:(id)input
                       withExpected:(id)expected {
-    
+
     self = [super initWithInvocation:invocation];
     if (self) {
         _input = input;
         _expected = expected;
     }
-    
+
     return self;
 }
 
 - (NSString *)name {
     NSInvocation *invocation = [self invocation];
-    
+
     NSString *methodName = NSStringFromSelector(invocation.selector);
     if ([methodName hasPrefix:@"test"]) {
         return [NSString stringWithFormat:@"-[%@ %@_when_%@_returns_%@]",
